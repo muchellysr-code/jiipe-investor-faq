@@ -25,7 +25,7 @@
     },
     {
       "id": "entry-process",
-      "name": "Investor Entry (Establishment → Licensing → Land → Construction)",
+      "name": "Investor Entry (Establishment to Construction)",
       "items": [
         {
           "q": "What is the typical end-to-end pathway for a foreign investor to start construction?",
@@ -328,3 +328,4 @@
     }
   ]
 }
+
