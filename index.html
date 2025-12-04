@@ -62,9 +62,10 @@
       gap: 18px;
     }
 
+    /* Logo reduced by 30% (280x90 -> 196x63) */
     .logo{
-      width: 280px;
-      height: 90px;
+      width: 196px;
+      height: 63px;
       object-fit: contain;
       border-radius: 0;
       background: transparent;
@@ -79,7 +80,6 @@
       font-weight: 800;
     }
 
-    /* Subheadline: cleaned (no mention of faq.json) */
     .sub{
       margin:0;
       color: var(--muted);
@@ -224,9 +224,10 @@
       font-size: 12px;
     }
 
+    /* Mobile: also reduce proportionally */
     @media (max-width: 720px){
       .brand{ align-items:flex-start; }
-      .logo{ width: 200px; height: 70px; }
+      .logo{ width: 140px; height: 49px; } /* 200x70 -> 140x49 (30% smaller) */
       h1{ font-size: 22px; }
       .sub{ font-size: 14px; }
     }
@@ -274,7 +275,6 @@
     function render() {
       const data = state.data;
 
-      // Headline is fixed; we still set browser tab title to match
       const fixedTitle = "JIIPE - SEZ FAQ";
       $("title").textContent = fixedTitle;
       document.title = fixedTitle;
