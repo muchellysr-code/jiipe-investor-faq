@@ -1,128 +1,330 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JIIPE — Industrial Investor FAQ</title>
-  <style>
-    :root{--bg:#0b1220;--card:#0f1a2e;--line:#1f2a44;--text:#e9efff;--muted:#9fb0d0;--chip:#132340;--accent:#7dd3fc;}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    header{max-width:1100px;margin:0 auto;padding:36px 18px 10px}
-    h1{margin:0 0 8px;font-size:30px}
-    .sub{color:var(--muted);line-height:1.5;max-width:75ch}
-    .bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    input{flex:1;min-width:240px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;color:var(--text);outline:none}
-    main{max-width:1100px;margin:0 auto;padding:0 18px 60px}
-    .meta{color:var(--muted);font-size:14px;margin:16px 2px}
-    .cat{border:1px solid var(--line);background:rgba(15,26,46,.7);border-radius:16px;margin:12px 0;overflow:hidden}
-    .catHead{display:flex;justify-content:space-between;gap:10px;padding:14px 14px;cursor:pointer}
-    .catTitle{font-weight:650}
-    .count{color:var(--muted);font-size:13px}
-    .items{padding:0 8px 10px;display:none}
-    .cat.open .items{display:block}
-    details{border:1px solid var(--line);background:rgba(11,18,32,.55);border-radius:12px;margin:10px;overflow:hidden}
-    summary{list-style:none;cursor:pointer;padding:12px 12px;display:flex;gap:10px}
-    summary::-webkit-details-marker{display:none}
-    .q{font-weight:650;line-height:1.35}
-    .ans{padding:0 12px 12px;color:var(--text);line-height:1.55}
-    .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-    .chip{font-size:12px;color:var(--muted);background:var(--chip);border:1px solid var(--line);padding:4px 8px;border-radius:999px}
-    a{color:var(--accent);text-decoration:none}
-  </style>
-</head>
-<body>
-<header>
-  <h1 id="title">Industrial Investor FAQ</h1>
-  <div class="sub">Search and browse investor-relevant answers. Data is loaded from <code>faq.json</code>.</div>
-  <div class="bar">
-    <input id="search" placeholder="Search: gas price, VAT, WWTP, port, incentives, OSS, PU..." />
-  </div>
-</header>
-
-<main>
-  <div id="meta" class="meta"></div>
-  <div id="app"></div>
-</main>
-
-<script>
-  const state = { data:null, query:"" };
-  const $ = (id)=>document.getElementById(id);
-
-  function matches(item){
-    const q = state.query.trim().toLowerCase();
-    if(!q) return true;
-    const hay = (item.q + " " + item.a + " " + (item.tags||[]).join(" ")).toLowerCase();
-    return hay.includes(q);
-  }
-
-  function render(){
-    const data = state.data;
-    $("title").textContent = data.title || "Industrial Investor FAQ";
-
-    const filteredCats = data.categories
-      .map(c => ({...c, items: (c.items||[]).filter(matches)}))
-      .filter(c => c.items.length > 0);
-
-    const total = filteredCats.reduce((s,c)=>s+c.items.length,0);
-    $("meta").textContent = `Updated: ${data.updated_at || "—"} • Showing ${total} answers`;
-
-    const app = $("app");
-    app.innerHTML = "";
-
-    for(const cat of filteredCats){
-      const sec = document.createElement("section");
-      sec.className = "cat";
-
-      const head = document.createElement("div");
-      head.className = "catHead";
-      head.innerHTML = `<div class="catTitle">${cat.name}</div><div class="count">${cat.items.length} Q&A</div>`;
-      head.onclick = ()=>sec.classList.toggle("open");
-
-      const items = document.createElement("div");
-      items.className = "items";
-
-      for(const it of cat.items){
-        const d = document.createElement("details");
-        const s = document.createElement("summary");
-        s.innerHTML = `<div class="q">${it.q}</div>`;
-        const a = document.createElement("div");
-        a.className = "ans";
-        a.textContent = it.a;
-
-        if(it.tags && it.tags.length){
-          const t = document.createElement("div");
-          t.className = "tags";
-          it.tags.forEach(tag=>{
-            const chip = document.createElement("span");
-            chip.className = "chip";
-            chip.textContent = tag;
-            t.appendChild(chip);
-          });
-          a.appendChild(t);
+{
+  "title": "JIIPE / Gresik SEZ — Industrial Investor FAQ (Master)",
+  "updated_at": "2025-12-04",
+  "categories": [
+    {
+      "id": "overview",
+      "name": "Overview & Positioning",
+      "items": [
+        {
+          "q": "What is JIIPE?",
+          "a": "JIIPE is positioned as an integrated industrial estate and deep-sea port ecosystem in Gresik, East Java, supported by SEZ (KEK) initiatives and one-stop facilitation for investors.",
+          "tags": ["overview", "sez", "location", "value-proposition"]
+        },
+        {
+          "q": "What is JIIPE’s SEZ (KEK) status and legal basis?",
+          "a": "JIIPE is referenced as the Gresik Special Economic Zone (SEZ/KEK), supported by regulations cited across materials (including Government Regulation No. 71/2021 and other SEZ-related regulations referenced in the documents).",
+          "tags": ["sez", "regulation", "incentives", "compliance"]
+        },
+        {
+          "q": "Who are the shareholders behind JIIPE?",
+          "a": "JIIPE is described as a joint venture between PT AKR Corporindo Tbk (private enterprise) and PT Pelindo (state-owned enterprise).",
+          "tags": ["overview", "shareholders", "governance"]
         }
-        d.appendChild(s);
-        d.appendChild(a);
-        items.appendChild(d);
-      }
-
-      sec.appendChild(head);
-      sec.appendChild(items);
-      app.appendChild(sec);
+      ]
+    },
+    {
+      "id": "entry-process",
+      "name": "Investor Entry (Establishment → Licensing → Land → Construction)",
+      "items": [
+        {
+          "q": "What is the typical end-to-end pathway for a foreign investor to start construction?",
+          "a": "The documented pathway is: (1) select KBLI, (2) align investment plan and sign MoU, (3) establish PT/PT PMA, (4) obtain licenses via OSS-RBA starting with NIB, (5) land order and apply for SEZ Business Operator (PU) status, (6) submit technical package and obtain construction approvals via technical review/expose, then (7) start construction.",
+          "tags": ["process", "timeline", "oss", "nib", "construction", "kbli", "pu"]
+        },
+        {
+          "q": "What is a “Business Operator (PU)” in SEZ context?",
+          "a": "PU (Pelaku Usaha) is best translated as Business Operator (sometimes written as Business Actor). Achieving PU status is linked to SEZ administrative processes and certain fiscal/non-fiscal facilities referenced in materials.",
+          "tags": ["sez", "pu", "definitions", "incentives", "process"]
+        },
+        {
+          "q": "What are the stated baseline requirements for setting up a PT PMA?",
+          "a": "Materials state minimum two shareholders and commonly cite investment > IDR 10 billion (excluding land/buildings) in a KBLI/location context, with paid-up capital referenced at a similar magnitude. Confirm exact applicability by sector/KBLI during due diligence.",
+          "tags": ["pma", "corporate-setup", "capital", "kbli", "compliance"]
+        },
+        {
+          "q": "What is OSS-RBA and what is the key first output?",
+          "a": "OSS-RBA is Indonesia’s risk-based online licensing system. The key first output is the NIB (Business Identification Number).",
+          "tags": ["oss", "nib", "licensing", "compliance"]
+        },
+        {
+          "q": "How does risk level affect licensing under OSS-RBA?",
+          "a": "Materials describe outcomes by risk tier: low risk (NIB), medium tiers (NIB plus standard certification with verification steps), and high risk (NIB followed by approvals such as AMDAL and other verification before full licensing).",
+          "tags": ["oss", "risk-based", "licensing", "amdal", "compliance"]
+        },
+        {
+          "q": "What causes the most common delays during setup and construction approvals?",
+          "a": "The most common delays are incomplete submissions and revision loops, especially around technical drawings and environmental documentation.",
+          "tags": ["risk", "timeline", "construction", "approvals", "documentation"]
+        }
+      ]
+    },
+    {
+      "id": "land-commercial",
+      "name": "Land Commercial Process & Plot Readiness",
+      "items": [
+        {
+          "q": "What are the key commercial milestones in the land transaction flow?",
+          "a": "Materials describe a sequence that may include signing land subscription/ordering documents, booking fee, down payment, PPJB (sale-purchase binding agreement), BAST (handover), and notarial deed steps depending on the legal structure.",
+          "tags": ["land", "commercial", "ppjb", "bast", "contracts"]
+        },
+        {
+          "q": "Can investors start construction with only a down payment?",
+          "a": "Some handbook/marketing materials claim a fast-track approach where construction may start after a down payment under an accelerated mechanism (e.g., KLIK + BAST policy), subject to required submissions and approvals.",
+          "tags": ["construction", "timeline", "land", "commercial", "process"]
+        },
+        {
+          "q": "What is the stated land delivery standard?",
+          "a": "Land handover is referenced at approximately +3.5 m LWS with fill. Compaction requirements are stated as tenant/industry-specific.",
+          "tags": ["land", "engineering", "site-readiness"]
+        },
+        {
+          "q": "Is VAT applicable to land purchase inside the SEZ?",
+          "a": "Some materials state VAT can be exempted in certain SEZ flows (often linked to obtaining PU/Business Operator ID). Another Q&A variant states “no VAT for land purchase in SEZ.” Treat as eligibility/procedure dependent and confirm during due diligence.",
+          "tags": ["sez", "tax", "vat", "land", "pu"]
+        },
+        {
+          "q": "What building controls are referenced (coverage/plot rules)?",
+          "a": "A cited example includes building coverage coefficient ~60% and floor coefficient ~1.5 for industrial plots; setbacks apply to buildings while allowing certain non-building uses (fences, parking, access, fire access).",
+          "tags": ["building", "estate-regulation", "planning", "compliance"]
+        }
+      ]
+    },
+    {
+      "id": "power",
+      "name": "Power & Electricity",
+      "items": [
+        {
+          "q": "Is coal allowed in JIIPE (including coal-fired CHP)?",
+          "a": "Multiple documents state coal is not allowed within the estate policy framework.",
+          "tags": ["energy", "policy", "compliance", "coal"]
+        },
+        {
+          "q": "What power supply scale is referenced across documents?",
+          "a": "References include JIIPE’s internal power plant (~23 MW) and national grid supply capacity referenced around the ~500 MW / ~500 MVA class. Confirm contracted capacity, voltage level, and SLA in commercial agreements.",
+          "tags": ["power", "capacity", "sla", "utilities"]
+        },
+        {
+          "q": "What electricity tariff is referenced?",
+          "a": "Multiple materials cite IDR 1,277/kWh (High Voltage). An RFQ annex also references ~USD 0.08/kWh alongside the IDR number. Confirm tariff structure (pass-through, demand charges, reactive penalties) and tenor.",
+          "tags": ["power", "tariff", "pricing", "utilities"]
+        },
+        {
+          "q": "Is dual-loop / high-reliability power supply available?",
+          "a": "Some Q&A materials state dual-loop grid configuration and premium reliability positioning, but the contractual SLA should be confirmed.",
+          "tags": ["power", "reliability", "sla", "grid"]
+        },
+        {
+          "q": "Can tenants build their own power plants or connect solar to the grid?",
+          "a": "Several documents state tenants cannot build their own power plants, but solar PV is allowed under off-grid (non-parallel) conditions.",
+          "tags": ["power", "solar", "policy", "off-grid"]
+        }
+      ]
+    },
+    {
+      "id": "water",
+      "name": "Industrial Water",
+      "items": [
+        {
+          "q": "Is industrial water available and what capacities are referenced?",
+          "a": "Documents reference water plant availability and capacities such as ~350 LPS current with ultimate up to ~1,200 LPS. Another questionnaire cites remaining clean water supply as 1,152 ton/hour (as written). Confirm available headroom and ramp-up plan with utility agreement.",
+          "tags": ["water", "capacity", "utilities"]
+        },
+        {
+          "q": "What water tariff structures are referenced?",
+          "a": "Different Q&A sets cite: IDR 18,000/m³ for usage up to 1,000 m³/day (one questionnaire), and a separate “full cost” scheme: IDR 14,000/m³ with 90% minimum usage (take-or-pay) plus connection and deposit fees tiered by contracted volume.",
+          "tags": ["water", "tariff", "pricing", "take-or-pay"]
+        },
+        {
+          "q": "Can tenants drill wells or use groundwater?",
+          "a": "A site-visit worksheet states groundwater extraction is not allowed under estate regulation, with supply based on surface water treatment.",
+          "tags": ["water", "policy", "compliance", "groundwater"]
+        },
+        {
+          "q": "Does a tenant need RO (reverse osmosis) for boilers or process water?",
+          "a": "Materials indicate estate water meets referenced standards, but RO requirements depend on the tenant’s specific process/boiler specifications.",
+          "tags": ["water", "process", "engineering", "quality"]
+        }
+      ]
+    },
+    {
+      "id": "gas",
+      "name": "Natural Gas",
+      "items": [
+        {
+          "q": "Is natural gas available and what price is referenced?",
+          "a": "Gas availability is stated, with a commonly referenced estimate of USD 9–11/MMBTU. Confirm final price mechanism and contractual basis during due diligence.",
+          "tags": ["gas", "pricing", "utilities"]
+        },
+        {
+          "q": "Who supplies gas and how is quota secured?",
+          "a": "One Q&A set names PT Berkah Buana Energi (BBE) and indicates an MoU with the supplier may be required to secure allocation/quota.",
+          "tags": ["gas", "supplier", "quota", "mou"]
+        },
+        {
+          "q": "Where is the gas delivery point?",
+          "a": "Gas delivery is described to be at the Meter Regulating Station (MRS) located inside the tenant plot.",
+          "tags": ["gas", "engineering", "interface", "mrs"]
+        }
+      ]
+    },
+    {
+      "id": "wastewater-environment",
+      "name": "Wastewater & Environmental Compliance",
+      "items": [
+        {
+          "q": "Is there a centralized WWTP and what capacities are referenced?",
+          "a": "Materials cite WWTP availability, including an example capacity around 2,500 m³/day and expansion plans referenced in some documents. Confirm current capacity and expansion timeline for your required load.",
+          "tags": ["wastewater", "wwtp", "capacity", "utilities"]
+        },
+        {
+          "q": "Is wastewater pre-treatment required for tenants?",
+          "a": "Yes. Materials state tenants must meet discharge specifications; if not, pre-treatment must be implemented within the tenant plot before discharge to the estate system.",
+          "tags": ["wastewater", "compliance", "pretreatment", "wwtp"]
+        },
+        {
+          "q": "Do tenants need full AMDAL?",
+          "a": "Some documents state the estate has an overarching AMDAL and tenants may only need RKL-RPL Rinci. Applicability depends on industry risk level and OSS-RBA classification; confirm for your KBLI and project scope.",
+          "tags": ["amdal", "rkl-rpl", "oss", "compliance", "environment"]
+        },
+        {
+          "q": "How often is environmental monitoring/reporting referenced?",
+          "a": "One bilingual site-visit document states environmental monitoring reports are generally submitted every 3–6 months to authorities and the park (as referenced).",
+          "tags": ["environment", "monitoring", "reporting", "compliance"]
+        },
+        {
+          "q": "Are COD / NH3-N limits provided in the materials?",
+          "a": "Some questionnaires ask about COD/NH3-N limits, but the values are not consistently specified in all documents and are often referenced as “see attachment” or presented during visits. Request the official discharge standard annex for bankable design.",
+          "tags": ["wastewater", "standards", "cod", "nh3-n", "data-room"]
+        }
+      ]
+    },
+    {
+      "id": "solid-waste",
+      "name": "Solid Waste & Hazardous Waste",
+      "items": [
+        {
+          "q": "How is domestic solid waste handled?",
+          "a": "Domestic solid waste is stated as collected daily by the estate/park.",
+          "tags": ["waste", "operations", "estate-services"]
+        },
+        {
+          "q": "How is hazardous waste handled?",
+          "a": "Hazardous waste is required to be handled by a licensed third-party hazardous waste company, selected/contracted by the tenant, with vendors referenced in Gresik/Surabaya.",
+          "tags": ["hazardous-waste", "compliance", "third-party", "EHS"]
+        }
+      ]
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics: Port, Roads, Rail, Airport",
+      "items": [
+        {
+          "q": "Does JIIPE have an on-site port?",
+          "a": "Yes. Multiple documents describe an on-site deep seaport with natural draught around –14 m LWS and capability up to ~100,000 DWT, supporting bulk and general cargo, with liquid terminal expansion and container terminal plans referenced.",
+          "tags": ["port", "logistics", "bulk", "marine"]
+        },
+        {
+          "q": "What port throughput is referenced?",
+          "a": "A site-visit worksheet references about 5 million tons/year and describes it as expandable.",
+          "tags": ["port", "capacity", "logistics"]
+        },
+        {
+          "q": "What distance references are commonly stated to key nodes?",
+          "a": "Common references include ~30 km to Surabaya, ~55 km to Juanda International Airport, ~3 km to toll/expressway access, ~11 km to an existing rail station (with rail connection plans), and ~27 km to Surabaya port (while also stating JIIPE has its own port).",
+          "tags": ["logistics", "access", "roads", "rail", "airport"]
+        },
+        {
+          "q": "Can JIIPE support bulk commodity flows such as industrial salt via dedicated berth/conveyor?",
+          "a": "One Q&A states this depends on location and distance to the port area. Coastal open storage is stated as possible, while refining facilities are stated to be built within industrial land (not at the berth/sea edge).",
+          "tags": ["port", "bulk", "salt", "logistics", "site-planning"]
+        }
+      ]
+    },
+    {
+      "id": "workforce",
+      "name": "Workforce & Industrial Relations",
+      "items": [
+        {
+          "q": "What minimum wage level is referenced for Gresik?",
+          "a": "Multiple documents reference minimum wage around IDR ~4.5–4.6 million/month (often shown as ~USD 300/month depending on FX reference and document year).",
+          "tags": ["labor", "wages", "cost-model"]
+        },
+        {
+          "q": "Are there gender ratio requirements for recruiting?",
+          "a": "One bilingual site-visit Q&A states there are no gender ratio requirements when recruiting.",
+          "tags": ["labor", "HR", "compliance"]
+        },
+        {
+          "q": "Are unions present in the industrial estate?",
+          "a": "One worksheet states there are no trade unions at the estate level, while tenant-level unions may exist; this is presented as having had no impact so far in that source.",
+          "tags": ["labor", "industrial-relations", "risk"]
+        },
+        {
+          "q": "Are there expatriate ratio restrictions?",
+          "a": "One Q&A states no strict restriction but encourages local hiring. Other materials mention local worker share expectations (e.g., local employees at least 60% / foreign 10–20%). Treat these as guidance/claims and confirm applicable regulations and enforcement for your project.",
+          "tags": ["expatriates", "labor", "compliance", "risk"]
+        },
+        {
+          "q": "What standard working hours are referenced?",
+          "a": "One bilingual site-visit document references 40 hours per week.",
+          "tags": ["labor", "operations", "HR"]
+        }
+      ]
+    },
+    {
+      "id": "fees-taxes",
+      "name": "Estate Fees & Local Charges (Indicative)",
+      "items": [
+        {
+          "q": "What estate maintenance fee is referenced?",
+          "a": "Some documents reference IDR 700/m²/month for plots under 10 ha and IDR 650/m²/month for plots at or above 10 ha.",
+          "tags": ["fees", "opex", "estate-services", "commercial"]
+        },
+        {
+          "q": "What taxes/fees are mentioned for land transactions and holding?",
+          "a": "Different Q&A sets cite typical Indonesian items such as BPHTB (acquisition duty), annual PBB (land/building tax), notary-related deed costs, and other government-administered value references (e.g., ZNT). Align these with definitive legal/tax memos during diligence.",
+          "tags": ["tax", "land", "bphtb", "pbb", "legal"]
+        }
+      ]
+    },
+    {
+      "id": "incentives",
+      "name": "SEZ Incentives (As Described in Materials)",
+      "items": [
+        {
+          "q": "What incentive categories are referenced under SEZ/KEK?",
+          "a": "Across documents, incentives are described as corporate income tax incentives (often “10–20 years” in some materials), VAT facilities in certain flows, and customs/import duty facilities for capital goods and in some cases raw materials, plus references to excise and import income tax facilities and “goods traffic” facilitation. Eligibility depends on KBLI, risk level, investment size, and SEZ Business Operator status; confirm via implementing regulations and approvals.",
+          "tags": ["sez", "incentives", "tax", "customs", "vat", "due-diligence"]
+        },
+        {
+          "q": "Are personal income tax incentives referenced?",
+          "a": "Some bilingual site-visit materials explicitly state there are no personal income tax incentives.",
+          "tags": ["tax", "personal-income-tax", "sez"]
+        }
+      ]
+    },
+    {
+      "id": "risks-bottlenecks",
+      "name": "Risks & Bottlenecks (Mentioned in Sources)",
+      "items": [
+        {
+          "q": "What risks/issues are flagged that could affect investor interest?",
+          "a": "One liaison interview material highlights congestion risk on access routes (e.g., corridors leading to the estate) and perceived regulatory uncertainty around SEZ transitions at the time of that interview.",
+          "tags": ["risk", "logistics", "regulation", "access"]
+        }
+      ]
+    },
+    {
+      "id": "data-room",
+      "name": "Recommended Data Room Requests (To Make Assumptions Bankable)",
+      "items": [
+        {
+          "q": "What should an industrial investor request to finalize bankable assumptions?",
+          "a": "Recurring gaps across documents suggest requesting: full Estate Regulation and technical standards; water quality standard (variability and test methods); official wastewater discharge limits (COD, NH3-N, metals as relevant), sampling regime and enforcement; template utility agreements (power/water/gas) including deposits/connection and SLA language; clear SEZ incentive eligibility and procedures mapped to KBLI and OSS-RBA; confirmed available headroom for power/water/gas and ramp-up timelines; and port/terminal specs for your cargo type (bulk/liquid/container) including access rules and operator information.",
+          "tags": ["data-room", "due-diligence", "standards", "sla", "contracts", "compliance"]
+        }
+      ]
     }
-  }
-
-  $("search").addEventListener("input", (e)=>{
-    state.query = e.target.value;
-    render();
-  });
-
-  async function init(){
-    const res = await fetch("./faq.json", { cache: "no-store" });
-    state.data = await res.json();
-    render();
-  }
-  init();
-</script>
-</body>
-</html>
+  ]
+}
