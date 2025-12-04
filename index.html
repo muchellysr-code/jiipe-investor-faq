@@ -13,34 +13,32 @@
        ========================= */
     :root{
       /* Background: ~15% light gray feel */
-      --bg: #f2f4f7;          /* primary page background */
-      --bg2:#eef1f5;          /* soft gradient companion */
+      --bg: #f2f4f7;
+      --bg2:#eef1f5;
 
       /* Surfaces */
-      --card: #ffffff;        /* card background */
-      --card2:#fbfcfe;        /* subtle alternate surface */
+      --card: #ffffff;
 
       /* Text */
-      --text: #0f172a;        /* slate-900 */
-      --muted:#64748b;        /* slate-500 */
-      --muted2:#94a3b8;       /* slate-400 */
+      --text: #0f172a;
+      --muted:#64748b;
+      --muted2:#94a3b8;
 
       /* Lines / shadows */
-      --line: #e5e7eb;        /* gray-200 */
+      --line: #e5e7eb;
       --shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
 
       /* Accent */
-      --accent:#2563eb;       /* blue-600 */
-      --accent2:#1d4ed8;      /* blue-700 */
+      --accent:#2563eb;
+      --accent2:#1d4ed8;
 
       /* Pills / chips */
-      --chip-bg:#f8fafc;      /* slate-50 */
-      --chip-line:#e2e8f0;    /* slate-200 */
+      --chip-bg:#f8fafc;
+      --chip-line:#e2e8f0;
 
       /* Radius */
       --r-lg: 18px;
       --r-md: 14px;
-      --r-sm: 12px;
 
       /* Layout */
       --max: 1100px;
@@ -69,28 +67,32 @@
     header{
       max-width: var(--max);
       margin: 0 auto;
-      padding: 34px var(--pad) 10px;
+      padding: 28px var(--pad) 10px;
     }
 
     .brand{
       display:flex;
       align-items:center;
-      gap: 14px;
+      gap: 18px;
     }
 
+    /* Larger logo (horizontal) */
     .logo{
-      width: 240px;
-      height: 72px;
+      width: 280px;
+      height: 90px;
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 0;
       background: transparent;
+      flex: 0 0 auto;
     }
 
+    /* Title: reduced ~50% from 30px -> 15px */
     h1{
       margin:0 0 6px;
-      font-size: 30px;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      font-weight: 800;
     }
 
     .sub{
@@ -98,6 +100,7 @@
       color: var(--muted);
       line-height: 1.5;
       max-width: 78ch;
+      font-size: 14px;
     }
 
     .bar{
@@ -117,6 +120,7 @@
       color: var(--text);
       outline: none;
       box-shadow: 0 1px 0 rgba(15,23,42,0.02);
+      font-size: 15px;
     }
 
     .search:focus{
@@ -164,8 +168,9 @@
     }
 
     .catTitle{
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.01em;
+      font-size: 18px;
     }
 
     .count{
@@ -202,15 +207,17 @@
     summary::-webkit-details-marker{ display:none; }
 
     .q{
-      font-weight: 650;
+      font-weight: 700;
       line-height: 1.35;
+      font-size: 15px;
     }
 
     .ans{
       padding: 0 14px 14px;
       color: var(--text);
       line-height: 1.6;
-      white-space: pre-wrap; /* keeps line breaks if any */
+      white-space: pre-wrap;
+      font-size: 14px;
     }
 
     .tags{
@@ -241,13 +248,19 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.95em;
     }
+
+    /* Responsive: avoid breaking on small screens */
+    @media (max-width: 720px){
+      .brand{ align-items:flex-start; }
+      .logo{ width: 200px; height: 70px; }
+      h1{ font-size: 16px; } /* keep readable on mobile */
+    }
   </style>
 </head>
 
 <body>
   <header>
     <div class="brand">
-      <!-- Put your logo here: upload to repo at /assets/jiipe-logo.png (or .svg) -->
       <img src="./assets/jiipe-logo.png" alt="JIIPE" class="logo"
            onerror="this.style.display='none';" />
 
@@ -277,6 +290,14 @@
     const state = { data: null, query: "" };
     const $ = (id) => document.getElementById(id);
 
+    // Remove "(Master)" at end, plus any extra whitespace
+    function cleanTitle(t){
+      if(!t) return "";
+      return String(t)
+        .replace(/\s*\(master\)\s*$/i, "")
+        .trim();
+    }
+
     function matches(item) {
       const q = state.query.trim().toLowerCase();
       if (!q) return true;
@@ -286,7 +307,13 @@
 
     function render() {
       const data = state.data;
-      $("title").textContent = data.title || "Industrial Investor FAQ";
+
+      // Title comes from faq.json but cleaned to remove "(Master)"
+      const title = cleanTitle(data.title) || "Industrial Investor FAQ";
+      $("title").textContent = title;
+
+      // Optional: also update page <title> in browser tab
+      document.title = title;
 
       const filteredCats = (data.categories || [])
         .map(c => ({ ...c, items: (c.items || []).filter(matches) }))
@@ -317,7 +344,6 @@
           const q = document.createElement("div");
           q.className = "q";
           q.textContent = it.q;
-
           s.appendChild(q);
 
           const a = document.createElement("div");
@@ -362,5 +388,3 @@
   </script>
 </body>
 </html>
-
-
