@@ -3,44 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JIIPE — Industrial Investor FAQ</title>
-  <meta name="description" content="Public, searchable Industrial Investor FAQ for JIIPE (Gresik SEZ)." />
+  <title>JIIPE - SEZ FAQ</title>
+  <meta name="description" content="Public, searchable SEZ FAQ for JIIPE (Gresik SEZ)." />
   <meta name="theme-color" content="#f2f4f7" />
 
   <style>
-    /* =========================
-       THEME TOKENS (easy edits)
-       ========================= */
     :root{
-      /* Background: ~15% light gray feel */
       --bg: #f2f4f7;
       --bg2:#eef1f5;
 
-      /* Surfaces */
       --card: #ffffff;
 
-      /* Text */
       --text: #0f172a;
       --muted:#64748b;
       --muted2:#94a3b8;
 
-      /* Lines / shadows */
       --line: #e5e7eb;
       --shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
 
-      /* Accent */
       --accent:#2563eb;
       --accent2:#1d4ed8;
 
-      /* Pills / chips */
       --chip-bg:#f8fafc;
       --chip-line:#e2e8f0;
 
-      /* Radius */
       --r-lg: 18px;
       --r-md: 14px;
 
-      /* Layout */
       --max: 1100px;
       --pad: 18px;
     }
@@ -61,9 +50,6 @@
     a{ color: var(--accent); text-decoration: none; }
     a:hover{ color: var(--accent2); }
 
-    /* =========================
-       HEADER
-       ========================= */
     header{
       max-width: var(--max);
       margin: 0 auto;
@@ -76,7 +62,6 @@
       gap: 18px;
     }
 
-    /* Larger logo (horizontal) */
     .logo{
       width: 280px;
       height: 90px;
@@ -86,21 +71,21 @@
       flex: 0 0 auto;
     }
 
-    /* Title: reduced ~50% from 30px -> 15px */
     h1{
       margin:0 0 6px;
-      font-size: 15px;
+      font-size: 28px;
       letter-spacing: -0.01em;
-      line-height: 1.25;
+      line-height: 1.15;
       font-weight: 800;
     }
 
+    /* Subheadline: cleaned (no mention of faq.json) */
     .sub{
       margin:0;
       color: var(--muted);
       line-height: 1.5;
       max-width: 78ch;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .bar{
@@ -129,9 +114,6 @@
       background: #fff;
     }
 
-    /* =========================
-       MAIN
-       ========================= */
     main{
       max-width: var(--max);
       margin: 0 auto;
@@ -144,7 +126,6 @@
       font-size: 14px;
     }
 
-    /* Category Card */
     .cat{
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.80);
@@ -187,7 +168,6 @@
       display: block;
     }
 
-    /* Q/A Item */
     details{
       border: 1px solid var(--line);
       background: var(--card);
@@ -244,16 +224,11 @@
       font-size: 12px;
     }
 
-    code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 0.95em;
-    }
-
-    /* Responsive: avoid breaking on small screens */
     @media (max-width: 720px){
       .brand{ align-items:flex-start; }
       .logo{ width: 200px; height: 70px; }
-      h1{ font-size: 16px; } /* keep readable on mobile */
+      h1{ font-size: 22px; }
+      .sub{ font-size: 14px; }
     }
   </style>
 </head>
@@ -263,10 +238,9 @@
     <div class="brand">
       <img src="./assets/jiipe-logo.png" alt="JIIPE" class="logo"
            onerror="this.style.display='none';" />
-
       <div>
-        <h1 id="title">Industrial Investor FAQ</h1>
-        <p class="sub">Search and browse investor-relevant answers. Content is loaded from <code>faq.json</code>.</p>
+        <h1 id="title">JIIPE - SEZ FAQ</h1>
+        <p class="sub">Search and browse investor-relevant answers.</p>
       </div>
     </div>
 
@@ -283,20 +257,12 @@
   </main>
 
   <footer>
-    <div>Hosted on GitHub Pages • Update content by editing <code>faq.json</code>.</div>
+    <div>Hosted on GitHub Pages.</div>
   </footer>
 
   <script>
     const state = { data: null, query: "" };
     const $ = (id) => document.getElementById(id);
-
-    // Remove "(Master)" at end, plus any extra whitespace
-    function cleanTitle(t){
-      if(!t) return "";
-      return String(t)
-        .replace(/\s*\(master\)\s*$/i, "")
-        .trim();
-    }
 
     function matches(item) {
       const q = state.query.trim().toLowerCase();
@@ -308,12 +274,10 @@
     function render() {
       const data = state.data;
 
-      // Title comes from faq.json but cleaned to remove "(Master)"
-      const title = cleanTitle(data.title) || "Industrial Investor FAQ";
-      $("title").textContent = title;
-
-      // Optional: also update page <title> in browser tab
-      document.title = title;
+      // Headline is fixed; we still set browser tab title to match
+      const fixedTitle = "JIIPE - SEZ FAQ";
+      $("title").textContent = fixedTitle;
+      document.title = fixedTitle;
 
       const filteredCats = (data.categories || [])
         .map(c => ({ ...c, items: (c.items || []).filter(matches) }))
