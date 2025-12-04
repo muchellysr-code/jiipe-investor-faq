@@ -49,7 +49,7 @@
         },
         {
           "q": "How does risk level affect licensing under OSS-RBA?",
-          "a": "Materials describe outcomes by risk tier: low risk (NIB), medium tiers (NIB plus standard certification with verification steps), and high risk (NIB followed by approvals such as AMDAL and other verification before full licensing).",
+          "a": "Low risk (NIB), medium tiers (NIB plus standard certification with verification steps), and high risk (NIB followed by approvals such as AMDAL and other verification before full licensing).",
           "tags": ["oss", "risk-based", "licensing", "amdal", "compliance"]
         },
         {
@@ -80,12 +80,12 @@
         },
         {
           "q": "Is VAT applicable to land purchase inside the SEZ?",
-          "a": "Some materials state VAT can be exempted in certain SEZ flows (often linked to obtaining PU/Business Operator ID). Another Q&A variant states “no VAT for land purchase in SEZ.” Treat as eligibility/procedure dependent and confirm during due diligence.",
+          "a": "VAT can be exempted in certain SEZ flows (often linked to obtaining PU/Business Operator ID). Another Q&A variant states “no VAT for land purchase in SEZ.” Treat as eligibility/procedure dependent and confirm during due diligence.",
           "tags": ["sez", "tax", "vat", "land", "pu"]
         },
         {
           "q": "What building controls are referenced (coverage/plot rules)?",
-          "a": "A cited example includes building coverage coefficient ~60% and floor coefficient ~1.5 for industrial plots; setbacks apply to buildings while allowing certain non-building uses (fences, parking, access, fire access).",
+          "a": "Building coverage coefficient ~60% and floor coefficient ~1.5 for industrial plots; setbacks apply to buildings while allowing certain non-building uses (fences, parking, access, fire access).",
           "tags": ["building", "estate-regulation", "planning", "compliance"]
         }
       ]
@@ -96,17 +96,17 @@
       "items": [
         {
           "q": "Is coal allowed in JIIPE (including coal-fired CHP)?",
-          "a": "Multiple documents state coal is not allowed within the estate policy framework.",
+          "a": "Coal is not allowed within the estate policy framework.",
           "tags": ["energy", "policy", "compliance", "coal"]
         },
         {
           "q": "What power supply scale is referenced across documents?",
-          "a": "References include JIIPE’s internal power plant (~23 MW) and national grid supply capacity referenced around the ~500 MW / ~500 MVA class. Confirm contracted capacity, voltage level, and SLA in commercial agreements.",
+          "a": "JIIPE’s internal power plant (~23 MW) and national grid supply capacity referenced around the ~500 MW / ~500 MVA class. Confirm contracted capacity, voltage level, and SLA in commercial agreements.",
           "tags": ["power", "capacity", "sla", "utilities"]
         },
         {
           "q": "What electricity tariff is referenced?",
-          "a": "Multiple materials cite IDR 1,277/kWh (High Voltage). An RFQ annex also references ~USD 0.08/kWh alongside the IDR number. Confirm tariff structure (pass-through, demand charges, reactive penalties) and tenor.",
+          "a": "IDR 1,277/kWh (High Voltage). An RFQ annex also references ~USD 0.08/kWh alongside the IDR number. Confirm tariff structure (pass-through, demand charges, reactive penalties) and tenor.",
           "tags": ["power", "tariff", "pricing", "utilities"]
         },
         {
@@ -116,7 +116,7 @@
         },
         {
           "q": "Can tenants build their own power plants or connect solar to the grid?",
-          "a": "Several documents state tenants cannot build their own power plants, but solar PV is allowed under off-grid (non-parallel) conditions.",
+          "a": "Tenants cannot build their own power plants, but solar PV is allowed under off-grid (non-parallel) conditions.",
           "tags": ["power", "solar", "policy", "off-grid"]
         }
       ]
@@ -127,12 +127,12 @@
       "items": [
         {
           "q": "Is industrial water available and what capacities are referenced?",
-          "a": "Documents reference water plant availability and capacities such as ~350 LPS current with ultimate up to ~1,200 LPS. Another questionnaire cites remaining clean water supply as 1,152 ton/hour (as written). Confirm available headroom and ramp-up plan with utility agreement.",
+          "a": "Water plant availability and capacities such as ~350 LPS current with ultimate up to ~1,200 LPS. Remaining clean water supply as 1,152 ton/hour (as written). Confirm available headroom and ramp-up plan with utility agreement.",
           "tags": ["water", "capacity", "utilities"]
         },
         {
           "q": "What water tariff structures are referenced?",
-          "a": "Different Q&A sets cite: IDR 18,000/m³ for usage up to 1,000 m³/day (one questionnaire), and a separate “full cost” scheme: IDR 14,000/m³ with 90% minimum usage (take-or-pay) plus connection and deposit fees tiered by contracted volume.",
+          "a": "IDR 18,000/m³ for usage up to 1,000 m³/day (one questionnaire), and a separate “full cost” scheme: IDR 14,000/m³ with 90% minimum usage (take-or-pay) plus connection and deposit fees tiered by contracted volume.",
           "tags": ["water", "tariff", "pricing", "take-or-pay"]
         },
         {
@@ -153,17 +153,17 @@
       "items": [
         {
           "q": "Is natural gas available and what price is referenced?",
-          "a": "Gas availability is stated, with a commonly referenced estimate of USD 9–11/MMBTU. Confirm final price mechanism and contractual basis during due diligence.",
+          "a": "Yes, with a commonly referenced estimate of USD 9–11/MMBTU. Confirm final price mechanism and contractual basis during due diligence.",
           "tags": ["gas", "pricing", "utilities"]
         },
         {
           "q": "Who supplies gas and how is quota secured?",
-          "a": "One Q&A set names PT Berkah Buana Energi (BBE) and indicates an MoU with the supplier may be required to secure allocation/quota.",
+          "a": "PT Berkah Buana Energi (BBE) and indicates an MoU with the supplier may be required to secure allocation/quota.",
           "tags": ["gas", "supplier", "quota", "mou"]
         },
         {
           "q": "Where is the gas delivery point?",
-          "a": "Gas delivery is described to be at the Meter Regulating Station (MRS) located inside the tenant plot.",
+          "a": "Gas delivery Meter Regulating Station (MRS) located inside the tenant plot.",
           "tags": ["gas", "engineering", "interface", "mrs"]
         }
       ]
@@ -179,17 +179,17 @@
         },
         {
           "q": "Is wastewater pre-treatment required for tenants?",
-          "a": "Yes. Materials state tenants must meet discharge specifications; if not, pre-treatment must be implemented within the tenant plot before discharge to the estate system.",
+          "a": "Yes. Tenants must meet discharge specifications; if not, pre-treatment must be implemented within the tenant plot before discharge to the estate system.",
           "tags": ["wastewater", "compliance", "pretreatment", "wwtp"]
         },
         {
           "q": "Do tenants need full AMDAL?",
-          "a": "Some documents state the estate has an overarching AMDAL and tenants may only need RKL-RPL Rinci. Applicability depends on industry risk level and OSS-RBA classification; confirm for your KBLI and project scope.",
+          "a": "Tenants may only need RKL-RPL Rinci. Applicability depends on industry risk level and OSS-RBA classification; confirm for your KBLI and project scope.",
           "tags": ["amdal", "rkl-rpl", "oss", "compliance", "environment"]
         },
         {
           "q": "How often is environmental monitoring/reporting referenced?",
-          "a": "One bilingual site-visit document states environmental monitoring reports are generally submitted every 3–6 months to authorities and the park (as referenced).",
+          "a": "Environmental monitoring reports are generally submitted every 3–6 months to authorities and the park (as referenced).",
           "tags": ["environment", "monitoring", "reporting", "compliance"]
         },
         {
@@ -221,22 +221,22 @@
       "items": [
         {
           "q": "Does JIIPE have an on-site port?",
-          "a": "Yes. Multiple documents describe an on-site deep seaport with natural draught around –14 m LWS and capability up to ~100,000 DWT, supporting bulk and general cargo, with liquid terminal expansion and container terminal plans referenced.",
+          "a": "Yes. On-site deep seaport with natural draught around –14 m LWS and capability up to ~100,000 DWT, supporting bulk and general cargo, with liquid terminal expansion and container terminal plans referenced.",
           "tags": ["port", "logistics", "bulk", "marine"]
         },
         {
           "q": "What port throughput is referenced?",
-          "a": "A site-visit worksheet references about 5 million tons/year and describes it as expandable.",
+          "a": "About 5 million tons/year and describes it as expandable.",
           "tags": ["port", "capacity", "logistics"]
         },
         {
           "q": "What distance references are commonly stated to key nodes?",
-          "a": "Common references include ~30 km to Surabaya, ~55 km to Juanda International Airport, ~3 km to toll/expressway access, ~11 km to an existing rail station (with rail connection plans), and ~27 km to Surabaya port (while also stating JIIPE has its own port).",
+          "a": "~30 km to Surabaya, ~55 km to Juanda International Airport, ~3 km to toll/expressway access, ~11 km to an existing rail station (with rail connection plans), and ~27 km to Surabaya port (while also stating JIIPE has its own port).",
           "tags": ["logistics", "access", "roads", "rail", "airport"]
         },
         {
           "q": "Can JIIPE support bulk commodity flows such as industrial salt via dedicated berth/conveyor?",
-          "a": "One Q&A states this depends on location and distance to the port area. Coastal open storage is stated as possible, while refining facilities are stated to be built within industrial land (not at the berth/sea edge).",
+          "a": "It depends on location and distance to the port area. Coastal open storage is stated as possible, while refining facilities are stated to be built within industrial land (not at the berth/sea edge).",
           "tags": ["port", "bulk", "salt", "logistics", "site-planning"]
         }
       ]
@@ -247,22 +247,22 @@
       "items": [
         {
           "q": "What minimum wage level is referenced for Gresik?",
-          "a": "Multiple documents reference minimum wage around IDR ~4.5–4.6 million/month (often shown as ~USD 300/month depending on FX reference and document year).",
+          "a": "Around IDR ~4.5–4.6 million/month (often shown as ~USD 300/month depending on FX reference and document year).",
           "tags": ["labor", "wages", "cost-model"]
         },
         {
           "q": "Are there gender ratio requirements for recruiting?",
-          "a": "One bilingual site-visit Q&A states there are no gender ratio requirements when recruiting.",
+          "a": "There are no gender ratio requirements when recruiting.",
           "tags": ["labor", "HR", "compliance"]
         },
         {
           "q": "Are unions present in the industrial estate?",
-          "a": "One worksheet states there are no trade unions at the estate level, while tenant-level unions may exist; this is presented as having had no impact so far in that source.",
+          "a": "There are no trade unions at the estate level, while tenant-level unions may exist; this is presented as having had no impact so far in that source.",
           "tags": ["labor", "industrial-relations", "risk"]
         },
         {
           "q": "Are there expatriate ratio restrictions?",
-          "a": "One Q&A states no strict restriction but encourages local hiring. Other materials mention local worker share expectations (e.g., local employees at least 60% / foreign 10–20%). Treat these as guidance/claims and confirm applicable regulations and enforcement for your project.",
+          "a": "No strict restriction but encourages local hiring. Other materials mention local worker share expectations (e.g., local employees at least 60% / foreign 10–20%). Treat these as guidance/claims and confirm applicable regulations and enforcement for your project.",
           "tags": ["expatriates", "labor", "compliance", "risk"]
         },
         {
@@ -328,4 +328,5 @@
     }
   ]
 }
+
 
