@@ -4,125 +4,361 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>JIIPE — Industrial Investor FAQ</title>
+  <meta name="description" content="Public, searchable Industrial Investor FAQ for JIIPE (Gresik SEZ)." />
+  <meta name="theme-color" content="#f2f4f7" />
+
   <style>
-    :root{--bg:#0b1220;--card:#0f1a2e;--line:#1f2a44;--text:#e9efff;--muted:#9fb0d0;--chip:#132340;--accent:#7dd3fc;}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    header{max-width:1100px;margin:0 auto;padding:36px 18px 10px}
-    h1{margin:0 0 8px;font-size:30px}
-    .sub{color:var(--muted);line-height:1.5;max-width:75ch}
-    .bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    input{flex:1;min-width:240px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;color:var(--text);outline:none}
-    main{max-width:1100px;margin:0 auto;padding:0 18px 60px}
-    .meta{color:var(--muted);font-size:14px;margin:16px 2px}
-    .cat{border:1px solid var(--line);background:rgba(15,26,46,.7);border-radius:16px;margin:12px 0;overflow:hidden}
-    .catHead{display:flex;justify-content:space-between;gap:10px;padding:14px 14px;cursor:pointer}
-    .catTitle{font-weight:650}
-    .count{color:var(--muted);font-size:13px}
-    .items{padding:0 8px 10px;display:none}
-    .cat.open .items{display:block}
-    details{border:1px solid var(--line);background:rgba(11,18,32,.55);border-radius:12px;margin:10px;overflow:hidden}
-    summary{list-style:none;cursor:pointer;padding:12px 12px;display:flex;gap:10px}
-    summary::-webkit-details-marker{display:none}
-    .q{font-weight:650;line-height:1.35}
-    .ans{padding:0 12px 12px;color:var(--text);line-height:1.55}
-    .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-    .chip{font-size:12px;color:var(--muted);background:var(--chip);border:1px solid var(--line);padding:4px 8px;border-radius:999px}
-    a{color:var(--accent);text-decoration:none}
+    /* =========================
+       THEME TOKENS (easy edits)
+       ========================= */
+    :root{
+      /* Background: ~15% light gray feel */
+      --bg: #f2f4f7;          /* primary page background */
+      --bg2:#eef1f5;          /* soft gradient companion */
+
+      /* Surfaces */
+      --card: #ffffff;        /* card background */
+      --card2:#fbfcfe;        /* subtle alternate surface */
+
+      /* Text */
+      --text: #0f172a;        /* slate-900 */
+      --muted:#64748b;        /* slate-500 */
+      --muted2:#94a3b8;       /* slate-400 */
+
+      /* Lines / shadows */
+      --line: #e5e7eb;        /* gray-200 */
+      --shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+
+      /* Accent */
+      --accent:#2563eb;       /* blue-600 */
+      --accent2:#1d4ed8;      /* blue-700 */
+
+      /* Pills / chips */
+      --chip-bg:#f8fafc;      /* slate-50 */
+      --chip-line:#e2e8f0;    /* slate-200 */
+
+      /* Radius */
+      --r-lg: 18px;
+      --r-md: 14px;
+      --r-sm: 12px;
+
+      /* Layout */
+      --max: 1100px;
+      --pad: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 10% -10%, rgba(37,99,235,0.10) 0%, rgba(37,99,235,0.00) 55%),
+        radial-gradient(800px 420px at 100% 0%, rgba(37,99,235,0.06) 0%, rgba(37,99,235,0.00) 60%),
+        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 35%, var(--bg) 100%);
+    }
+
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ color: var(--accent2); }
+
+    /* =========================
+       HEADER
+       ========================= */
+    header{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 34px var(--pad) 10px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+    }
+
+    .logo{
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: transparent;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .sub{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 78ch;
+    }
+
+    .bar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 16px;
+    }
+
+    .search{
+      flex:1;
+      min-width: 260px;
+      padding: 12px 14px;
+      border-radius: var(--r-md);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.85);
+      color: var(--text);
+      outline: none;
+      box-shadow: 0 1px 0 rgba(15,23,42,0.02);
+    }
+
+    .search:focus{
+      border-color: rgba(37,99,235,0.45);
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.10);
+      background: #fff;
+    }
+
+    /* =========================
+       MAIN
+       ========================= */
+    main{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad) 70px;
+    }
+
+    .meta{
+      margin: 14px 2px 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Category Card */
+    .cat{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.80);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin: 12px 0;
+      backdrop-filter: blur(8px);
+    }
+
+    .catHead{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(180deg, rgba(248,250,252,0.90) 0%, rgba(255,255,255,0.75) 100%);
+      border-bottom: 1px solid rgba(229,231,235,0.75);
+    }
+
+    .catTitle{
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .count{
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .items{
+      padding: 0 10px 12px;
+      display: none;
+    }
+
+    .cat.open .items{
+      display: block;
+    }
+
+    /* Q/A Item */
+    details{
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--r-md);
+      margin: 10px;
+      overflow: hidden;
+    }
+
+    summary{
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 14px;
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    summary::-webkit-details-marker{ display:none; }
+
+    .q{
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .ans{
+      padding: 0 14px 14px;
+      color: var(--text);
+      line-height: 1.6;
+      white-space: pre-wrap; /* keeps line breaks if any */
+    }
+
+    .tags{
+      display:flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .chip{
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-line);
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+
+    footer{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad) 40px;
+      color: var(--muted2);
+      font-size: 12px;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
   </style>
 </head>
+
 <body>
-<header>
-  <h1 id="title">Industrial Investor FAQ</h1>
-  <div class="sub">Search and browse investor-relevant answers. Data is loaded from <code>faq.json</code>.</div>
-  <div class="bar">
-    <input id="search" placeholder="Search: gas price, VAT, WWTP, port, incentives, OSS, PU..." />
-  </div>
-</header>
+  <header>
+    <div class="brand">
+      <!-- Put your logo here: upload to repo at /assets/jiipe-logo.png (or .svg) -->
+      <img src="./assets/jiipe-logo.png" alt="JIIPE" class="logo"
+           onerror="this.style.display='none';" />
 
-<main>
-  <div id="meta" class="meta"></div>
-  <div id="app"></div>
-</main>
+      <div>
+        <h1 id="title">Industrial Investor FAQ</h1>
+        <p class="sub">Search and browse investor-relevant answers. Content is loaded from <code>faq.json</code>.</p>
+      </div>
+    </div>
 
-<script>
-  const state = { data:null, query:"" };
-  const $ = (id)=>document.getElementById(id);
+    <div class="bar">
+      <input id="search" class="search"
+             placeholder="Search: gas price, VAT, WWTP, port, incentives, OSS, PU..."
+             autocomplete="off" />
+    </div>
+  </header>
 
-  function matches(item){
-    const q = state.query.trim().toLowerCase();
-    if(!q) return true;
-    const hay = (item.q + " " + item.a + " " + (item.tags||[]).join(" ")).toLowerCase();
-    return hay.includes(q);
-  }
+  <main>
+    <div id="meta" class="meta"></div>
+    <div id="app"></div>
+  </main>
 
-  function render(){
-    const data = state.data;
-    $("title").textContent = data.title || "Industrial Investor FAQ";
+  <footer>
+    <div>Hosted on GitHub Pages • Update content by editing <code>faq.json</code>.</div>
+  </footer>
 
-    const filteredCats = data.categories
-      .map(c => ({...c, items: (c.items||[]).filter(matches)}))
-      .filter(c => c.items.length > 0);
+  <script>
+    const state = { data: null, query: "" };
+    const $ = (id) => document.getElementById(id);
 
-    const total = filteredCats.reduce((s,c)=>s+c.items.length,0);
-    $("meta").textContent = `Updated: ${data.updated_at || "—"} • Showing ${total} answers`;
-
-    const app = $("app");
-    app.innerHTML = "";
-
-    for(const cat of filteredCats){
-      const sec = document.createElement("section");
-      sec.className = "cat";
-
-      const head = document.createElement("div");
-      head.className = "catHead";
-      head.innerHTML = `<div class="catTitle">${cat.name}</div><div class="count">${cat.items.length} Q&A</div>`;
-      head.onclick = ()=>sec.classList.toggle("open");
-
-      const items = document.createElement("div");
-      items.className = "items";
-
-      for(const it of cat.items){
-        const d = document.createElement("details");
-        const s = document.createElement("summary");
-        s.innerHTML = `<div class="q">${it.q}</div>`;
-        const a = document.createElement("div");
-        a.className = "ans";
-        a.textContent = it.a;
-
-        if(it.tags && it.tags.length){
-          const t = document.createElement("div");
-          t.className = "tags";
-          it.tags.forEach(tag=>{
-            const chip = document.createElement("span");
-            chip.className = "chip";
-            chip.textContent = tag;
-            t.appendChild(chip);
-          });
-          a.appendChild(t);
-        }
-        d.appendChild(s);
-        d.appendChild(a);
-        items.appendChild(d);
-      }
-
-      sec.appendChild(head);
-      sec.appendChild(items);
-      app.appendChild(sec);
+    function matches(item) {
+      const q = state.query.trim().toLowerCase();
+      if (!q) return true;
+      const hay = (item.q + " " + item.a + " " + (item.tags || []).join(" ")).toLowerCase();
+      return hay.includes(q);
     }
-  }
 
-  $("search").addEventListener("input", (e)=>{
-    state.query = e.target.value;
-    render();
-  });
+    function render() {
+      const data = state.data;
+      $("title").textContent = data.title || "Industrial Investor FAQ";
 
-  async function init(){
-    const res = await fetch("./faq.json", { cache: "no-store" });
-    state.data = await res.json();
-    render();
-  }
-  init();
-</script>
+      const filteredCats = (data.categories || [])
+        .map(c => ({ ...c, items: (c.items || []).filter(matches) }))
+        .filter(c => c.items.length > 0);
+
+      const total = filteredCats.reduce((s, c) => s + c.items.length, 0);
+      $("meta").textContent = `Updated: ${data.updated_at || "—"} • Showing ${total} answers`;
+
+      const app = $("app");
+      app.innerHTML = "";
+
+      for (const cat of filteredCats) {
+        const sec = document.createElement("section");
+        sec.className = "cat";
+
+        const head = document.createElement("div");
+        head.className = "catHead";
+        head.innerHTML = `<div class="catTitle">${cat.name}</div><div class="count">${cat.items.length} Q&A</div>`;
+        head.onclick = () => sec.classList.toggle("open");
+
+        const items = document.createElement("div");
+        items.className = "items";
+
+        for (const it of cat.items) {
+          const d = document.createElement("details");
+
+          const s = document.createElement("summary");
+          const q = document.createElement("div");
+          q.className = "q";
+          q.textContent = it.q;
+
+          s.appendChild(q);
+
+          const a = document.createElement("div");
+          a.className = "ans";
+          a.textContent = it.a;
+
+          if (it.tags && it.tags.length) {
+            const t = document.createElement("div");
+            t.className = "tags";
+            it.tags.forEach(tag => {
+              const chip = document.createElement("span");
+              chip.className = "chip";
+              chip.textContent = tag;
+              t.appendChild(chip);
+            });
+            a.appendChild(t);
+          }
+
+          d.appendChild(s);
+          d.appendChild(a);
+          items.appendChild(d);
+        }
+
+        sec.appendChild(head);
+        sec.appendChild(items);
+        app.appendChild(sec);
+      }
+    }
+
+    $("search").addEventListener("input", (e) => {
+      state.query = e.target.value;
+      render();
+    });
+
+    async function init() {
+      const res = await fetch("./faq.json", { cache: "no-store" });
+      state.data = await res.json();
+      render();
+    }
+
+    init();
+  </script>
 </body>
 </html>
